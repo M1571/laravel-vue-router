@@ -21,10 +21,13 @@ Auth::routes();
 
 
 
-Route::middleware('auth')->prefix('admin')->group(function() {
+Route::middleware('auth')
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(function() {
      
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/contact','HomeController@index');
+    Route::get('/contact', 'HomeController@index')->name('contact');
 
 }); 
