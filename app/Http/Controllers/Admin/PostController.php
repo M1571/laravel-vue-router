@@ -55,14 +55,22 @@ class PostController extends Controller
         $counter = 1;
 
         $post_present = Post::where('slug',$slug)->first();
-        
+
         while( $post_present ){
             $slug = $slug_base . '-' . $counter;
             $counter++;
             $post_present = Post::where('slug',$slug)->first();
         }
 
-        dd($request->all());
+        $post = new Post();
+        $post->fill( $data );
+        $post->slug = $slug; 
+
+        $post->save();
+
+        // dd($request->all());
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
