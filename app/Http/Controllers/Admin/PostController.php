@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use SebastianBergmann\LinesOfCode\Counter;
 
 class PostController extends Controller
 {
@@ -38,7 +40,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:150',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date|before_or_equal:today'
+
+        ]);
+
+        $data = $request->all();
+
+        $slug = Str::slug( $data['title'] );
+        $slug_base = $slug;
+        // dd($slug);
+        $counter = 1;
+
+        $post_present = Post::where('slug',$slug)->first();
+        
+        while( $post_present ){
+            $slug = $slug_base . '-' . $counter;
+            $counter++;
+            $post_present = Post::where('slug',$slug)->first();
+        }
+
+        dd($request->all());
     }
 
     /**
