@@ -29,13 +29,11 @@
 
         <div class="form-group">
             <label for="published_at">Data di pubblicazione</label>
-            <input type="date" class="form-control @error('published_at') is-invalid @enderror" id="published_at" name="published_at" value="{{ old('published_at') ?: $post->published_at }}" aria-describedby="emailHelp">
+            <input type="date" class=" @error('published_at') is-invalid @enderror" id="published_at" name="published_at" value="{{ old('published_at') ?: Str::substr($post->published_at, 0, 10) }}" aria-describedby="emailHelp">
             @error('published_at')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        @dump($post->published_at)
 
         <button type="submit" class="btn btn-primary">Salva</button>
 

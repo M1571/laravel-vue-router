@@ -102,9 +102,41 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+
+        $request->validate([
+            'title' => 'required|string|max:150',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date|before_or_equal:today'
+        ]);
+
+        $data = $request->all();
+
+        if( $post->title != $data['title'] ) {
+
+            $slug = Str::slug( $data['title'] );
+            $slug_base = $slug;
+            // dd($slug);
+            $counter = 1;
+
+            $post_present = Post::where('slug',$slug)->first();
+
+            while( $post_present ) {
+                $slug = $slug_base . '-' . $counter;
+                $counter++;
+                $post_present = Post::where('slug',$slug)->first();
+            }
+
+        }
+
+        $data['slug'] = $slug;
+        // dd($data);
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.index');
+
     }
 
     /**
