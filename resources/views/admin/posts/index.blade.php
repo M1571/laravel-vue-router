@@ -33,6 +33,11 @@
                     <td>{{ $post->created_at }}</td>
                     <td>
                         <a class="btn btn-small btn-warning" href="{{ route('admin.posts.edit', $post) }}">Edit</a>
+                        <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
                     </td>
                 </tr>
               @endforeach

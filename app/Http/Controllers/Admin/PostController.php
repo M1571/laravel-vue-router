@@ -15,8 +15,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->all());
         $posts = Post::orderBy('created_at','desc')->limit(20)->get();
 
         return view('admin.posts.index', compact('posts'));
@@ -49,26 +50,13 @@ class PostController extends Controller
 
         $data = $request->all();
 
-        $slug = Str::slug( $data['title'] );
-        $slug_base = $slug;
-        // dd($slug);
-        $counter = 1;
-
-        $post_present = Post::where('slug',$slug)->first();
-
-        while( $post_present ){
-            $slug = $slug_base . '-' . $counter;
-            $counter++;
-            $post_present = Post::where('slug',$slug)->first();
-        }
+        $slug = Post::getUniqueSlug( $data['title'] );
 
         $post = new Post();
         $post->fill( $data );
         $post->slug = $slug; 
 
         $post->save();
-
-        // dd($request->all());
 
         return redirect()->route('admin.posts.index');
     }
@@ -79,10 +67,10 @@ class PostController extends Controller
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -115,18 +103,7 @@ class PostController extends Controller
 
         if( $post->title != $data['title'] ) {
 
-            $slug = Str::slug( $data['title'] );
-            $slug_base = $slug;
-            // dd($slug);
-            $counter = 1;
-
-            $post_present = Post::where('slug',$slug)->first();
-
-            while( $post_present ) {
-                $slug = $slug_base . '-' . $counter;
-                $counter++;
-                $post_present = Post::where('slug',$slug)->first();
-            }
+           $slug =  Post::getUniqueSlug( $data['title'] );
 
         }
 
@@ -145,8 +122,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( Post $post )
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 }
