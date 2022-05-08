@@ -18,6 +18,16 @@
         </div>
 
         <div class="form-group">
+            <label for="category_id">Categoria</label>
+            <select class="form-control" id="category_id" name="category_id">
+              <option>-- nessuna --</option>
+              @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+        <div class="form-group">
             <label for="content">Contenuto dell'articolo*</label>
             <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="3">{{ old('content') }}</textarea> 
             {{-- <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" aria-describedby="emailHelp"> --}}
