@@ -31,6 +31,8 @@
             @enderror
         </div>
 
+        {{-- categories --}}
+
         <div class="form-group">
             <label for="category_id">Categoria</label>
             <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
@@ -43,6 +45,30 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
+
+          {{-- tags --}}
+
+          <label>Tags:</label>
+          <div class="d-flex" style="gap: 1rem;">
+            @foreach($tags as $tag)
+                <div class="form-group form-check">
+                    <input type="checkbox" {{ $post->tags->contains( $tag ) ? 'checked' : '' }} class="form-check-input" value="{{ $tag->id }}" name="tags[]" id="tags-{{ $tag->id }}">
+                    <label class="form-check-label" for="tags-{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
+          </div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+          @endif
+
+
+          {{-- content --}}
 
         <div class="form-group">
             <label for="content">Contenuto dell'articolo*</label>

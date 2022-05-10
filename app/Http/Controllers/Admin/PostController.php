@@ -8,6 +8,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use SebastianBergmann\LinesOfCode\Counter;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -19,7 +20,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         // dd($request->all());
-        $posts = Post::with('category')->orderBy('created_at','desc')->limit(20)->get();
+        $posts = Post::with(['category','tags'])->orderBy('created_at','desc')->limit(20)->get();
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -87,8 +88,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post','categories'));
+        return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -106,6 +108,7 @@ class PostController extends Controller
             'content' => 'required|string',
             'published_at' => 'nullable|date|before_or_equal:today',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id',
         ]);
 
         $data = $request->all();
@@ -119,6 +122,14 @@ class PostController extends Controller
         }
 
         // dd($data);
+
+        if( array_key_exists( 'tags', $data ) ) {
+
+            $post->tags()->sync( $data['tags'] );
+            
+        } else {
+            $post->tags()->sync([]);
+        }
 
         $post->update($data);
 
