@@ -32,3 +32,7 @@ Route::middleware('auth')
     Route::resource('posts', 'PostController');
 
 }); 
+
+Route::get('{any?}',function($param) {
+    return $param;
+});
