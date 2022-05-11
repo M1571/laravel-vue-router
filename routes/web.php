@@ -35,4 +35,4 @@ Route::middleware('auth')
 
 Route::get('{any?}',function($param) {
     return $param;
-});
+})->where('any','.*');
