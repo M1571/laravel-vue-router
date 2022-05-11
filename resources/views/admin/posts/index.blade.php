@@ -19,7 +19,7 @@
                 <th scope="col">Slug</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Tags</th>
-                <th scope="col">Data pubblicazione</th>
+                <th scope="col">Ultima modifica</th>
                 <th scope="col">Data creazione</th>
                 <th scope="col"></th>
               </tr>
@@ -37,9 +37,9 @@
                         <span class="badge badge-pill badge-info">{{ $tag->name }}</span>
                       @endforeach
                     </td>
-                    <td>{{ $post->published_at }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>
+                    <td>{{ $post->updated_at ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->updated_at)->locale('it-IT')->diffForHumans() : '' }}</td>
+                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$post->created_at)->format('d/m/Y') }}</td>
+                    <td class="d-flex" style="gap: 0.8rem;">
                         <a class="btn btn-small btn-warning" href="{{ route('admin.posts.edit', $post) }}">Edit</a>
                         <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
                             @csrf
