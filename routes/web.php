@@ -33,6 +33,10 @@ Route::middleware('auth')
 
 }); 
 
-Route::get('{any?}',function($param) {
-    return $param;
-})->where('any','.*');
+// Route::get('{any?}',function() {
+//     return view('guest.home');
+// })->where('any','.*');
+
+Route::fallback(function() {
+    return view('guest.home');
+});
