@@ -21,5 +21,7 @@
 </head>
 <body>
     <div id="root">Qui metto vue</div>
+
+    <script src="{{ asset('js/front.js') }}"></script>
 </body>
 </html>
