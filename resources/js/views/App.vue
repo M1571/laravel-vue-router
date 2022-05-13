@@ -9,7 +9,7 @@
                 </ul>
             </nav>
         </header>
-
+        <PostsGrid />
         <footer>
             &copy; Boolpress 2022
         </footer>

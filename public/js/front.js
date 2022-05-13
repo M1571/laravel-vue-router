@@ -2463,27 +2463,33 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("PostsGrid"),
+      _vm._v(" "),
+      _c("footer", [_vm._v("\n        © Boolpress 2022\n    ")]),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("header", [
-        _c("nav", [
-          _c("ul", [
-            _c("li", [_vm._v("Home")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Posts")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Categories")]),
-          ]),
+    return _c("header", [
+      _c("nav", [
+        _c("ul", [
+          _c("li", [_vm._v("Home")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Posts")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Categories")]),
         ]),
       ]),
-      _vm._v(" "),
-      _c("footer", [_vm._v("\n        © Boolpress 2022\n    ")]),
     ])
   },
 ]
