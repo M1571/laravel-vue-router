@@ -25,7 +25,8 @@
 
                 axios.get('/api/posts')
                 .then( res => {
-                    console.log(res.data.posts)
+                    const { posts } = res.data
+                    this.posts = posts
                 })
                 .catch( err => {
                     console.warn(err)
