@@ -8,7 +8,9 @@
         </div>
         <div class="container py-4">
             <ul class="pagination flex justify-center gap-4 items-center">
-                <li class="dot bg-white/30 rounded-full h-10 w-10 flex items-center justify-center text-sm" v-for="n in lastPage" :key="n">{{ n }}</li>
+                <li @click="fetchPosts(n)" 
+                :class="[ currentPage === n ? 'bg-orange-400' : 'bg-white/30','dot cursor-pointer rounded-full h-10 w-10 flex items-center justify-center text-sm']" 
+                v-for="n in lastPage" :key="n">{{ n }}</li>
             </ul>
         </div>
     </div>
@@ -30,9 +32,13 @@ import PostCard from '../components/PostCard.vue'
             }
         },
         methods: {
-            fetchPosts() {
+            fetchPosts(page = 1) {
 
-                axios.get('/api/posts')
+                axios.get('/api/posts',{
+                    params: {
+                        page: page
+                    }
+                })
                 .then( res => {
                     const { posts } = res.data
                     const { data, last_page, current_page } = posts

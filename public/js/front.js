@@ -1995,6 +1995,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2011,7 +2013,12 @@ __webpack_require__.r(__webpack_exports__);
     fetchPosts: function fetchPosts() {
       var _this = this;
 
-      axios.get('/api/posts').then(function (res) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (res) {
         var posts = res.data.posts;
         var data = posts.data,
             last_page = posts.last_page,
@@ -3299,8 +3306,15 @@ var render = function () {
             "li",
             {
               key: n,
-              staticClass:
-                "dot bg-white/30 rounded-full h-10 w-10 flex items-center justify-center text-sm",
+              class: [
+                _vm.currentPage === n ? "bg-orange-400" : "bg-white/30",
+                "dot cursor-pointer rounded-full h-10 w-10 flex items-center justify-center text-sm",
+              ],
+              on: {
+                click: function ($event) {
+                  return _vm.fetchPosts(n)
+                },
+              },
             },
             [_vm._v(_vm._s(n))]
           )
