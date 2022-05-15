@@ -3,17 +3,19 @@
         <div class="container">
             <h1>Ultimi post</h1>
         </div>
-        <div class="container">
-            <div v-for="post in posts" :key="post.id">
-                {{ post.title }}
-            </div>
+        <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+            <PostCard v-for="el in posts" :key="el.id" :post="el"/>
         </div>
     </div>
 </template>
 
 <script>
+import PostCard from '../components/PostCard.vue'
 
     export default {
+        components: {
+            PostCard
+        },
 
         data() {
             return {
