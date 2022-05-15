@@ -1966,8 +1966,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchPosts: function fetchPosts() {
+      var _this = this;
+
       axios.get('/api/posts').then(function (res) {
-        console.log(res.data.posts);
+        var posts = res.data.posts;
+        _this.posts = posts;
       })["catch"](function (err) {
         console.warn(err);
       });
