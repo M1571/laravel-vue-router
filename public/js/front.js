@@ -1994,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3290,9 +3291,22 @@ var render = function () {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "container py-4" }, [
-      _c("p", [_vm._v("last page: " + _vm._s(_vm.lastPage))]),
-      _vm._v(" "),
-      _c("p", [_vm._v("current page: " + _vm._s(_vm.currentPage))]),
+      _c(
+        "ul",
+        { staticClass: "pagination flex justify-center gap-4 items-center" },
+        _vm._l(_vm.lastPage, function (n) {
+          return _c(
+            "li",
+            {
+              key: n,
+              staticClass:
+                "dot bg-white/30 rounded-full h-10 w-10 flex items-center justify-center text-sm",
+            },
+            [_vm._v(_vm._s(n))]
+          )
+        }),
+        0
+      ),
     ]),
   ])
 }
