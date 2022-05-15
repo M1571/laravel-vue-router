@@ -35,7 +35,7 @@
     <link href="{{ asset('css/front.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="root">Qui metto vue</div>
+    <div id="root"></div>
 
     <script src="{{ asset('js/front.js') }}"></script>
 </body>
