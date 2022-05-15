@@ -1,10 +1,14 @@
 <template>
-    <div>
+    <div class="py-12">
         <div class="container">
             <h1>Ultimi post</h1>
         </div>
         <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
             <PostCard v-for="el in posts" :key="el.id" :post="el"/>
+        </div>
+        <div class="container py-4">
+            <p>last page: {{ lastPage }}</p>
+            <p>current page: {{ currentPage }}</p>
         </div>
     </div>
 </template>
@@ -19,7 +23,9 @@ import PostCard from '../components/PostCard.vue'
 
         data() {
             return {
-                posts: []
+                posts: [],
+                lastPage: 0,
+                currentPage: 1,
             }
         },
         methods: {
@@ -28,7 +34,10 @@ import PostCard from '../components/PostCard.vue'
                 axios.get('/api/posts')
                 .then( res => {
                     const { posts } = res.data
-                    this.posts = posts
+                    const { data, last_page, current_page } = posts
+                    this.posts = data
+                    this.currentPage = current_page
+                    this.lastPage = last_page
                 })
                 .catch( err => {
                     console.warn(err)

@@ -1990,6 +1990,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1997,7 +2001,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      lastPage: 0,
+      currentPage: 1
     };
   },
   methods: {
@@ -2006,7 +2012,12 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/posts').then(function (res) {
         var posts = res.data.posts;
-        _this.posts = posts;
+        var data = posts.data,
+            last_page = posts.last_page,
+            current_page = posts.current_page;
+        _this.posts = data;
+        _this.currentPage = current_page;
+        _this.lastPage = last_page;
       })["catch"](function (err) {
         console.warn(err);
       });
@@ -3263,7 +3274,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "py-12" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
@@ -3277,6 +3288,12 @@ var render = function () {
       }),
       1
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "container py-4" }, [
+      _c("p", [_vm._v("last page: " + _vm._s(_vm.lastPage))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("current page: " + _vm._s(_vm.currentPage))]),
+    ]),
   ])
 }
 var staticRenderFns = [
